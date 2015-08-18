@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r11 - in trunk/support/django_src/django/contrib: . flatpages flatpages/models redirects redirects/models syndication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r11%20-%20in%20trunk/support/django_src/django/contrib%3A%20.%20flatpages%20flatpages/models%20redirects%20redirects/models%20syndication&In-Reply-To=%3C200511170036.jAH0aAcJ005793%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000009.html">
+   <LINK REL="Next"  HREF="000011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r11 - in trunk/support/django_src/django/contrib: . flatpages flatpages/models redirects redirects/models syndication</H1>
+    <B>gecko at BerliOS</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r11%20-%20in%20trunk/support/django_src/django/contrib%3A%20.%20flatpages%20flatpages/models%20redirects%20redirects/models%20syndication&In-Reply-To=%3C200511170036.jAH0aAcJ005793%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r11 - in trunk/support/django_src/django/contrib: . flatpages flatpages/models redirects redirects/models syndication">gecko at berlios.de
+       </A><BR>
+    <I>Thu Nov 17 01:36:10 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000009.html">[Gappy-svn] r10 - trunk/docs
+</A></li>
+        <LI>Next message: <A HREF="000011.html">[Gappy-svn] r12 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: gecko
+Date: 2005-11-17 01:36:03 +0100 (Thu, 17 Nov 2005)
+New Revision: 11
+
+Added:
+   trunk/support/django_src/django/contrib/flatpages/
+   trunk/support/django_src/django/contrib/flatpages/README.TXT
+   trunk/support/django_src/django/contrib/flatpages/__init__.py
+   trunk/support/django_src/django/contrib/flatpages/middleware.py
+   trunk/support/django_src/django/contrib/flatpages/models/
+   trunk/support/django_src/django/contrib/flatpages/models/__init__.py
+   trunk/support/django_src/django/contrib/flatpages/models/flatpages.py
+   trunk/support/django_src/django/contrib/flatpages/urls.py
+   trunk/support/django_src/django/contrib/flatpages/views.py
+   trunk/support/django_src/django/contrib/redirects/
+   trunk/support/django_src/django/contrib/redirects/README.TXT
+   trunk/support/django_src/django/contrib/redirects/__init__.py
+   trunk/support/django_src/django/contrib/redirects/middleware.py
+   trunk/support/django_src/django/contrib/redirects/models/
+   trunk/support/django_src/django/contrib/redirects/models/__init__.py
+   trunk/support/django_src/django/contrib/redirects/models/redirects.py
+   trunk/support/django_src/django/contrib/syndication/
+   trunk/support/django_src/django/contrib/syndication/__init__.py
+   trunk/support/django_src/django/contrib/syndication/feeds.py
+   trunk/support/django_src/django/contrib/syndication/views.py
+Log:
+Added the syndication, redirect and flatpage support
+
+
+Added: trunk/support/django_src/django/contrib/flatpages/README.TXT
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/README.TXT	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/README.TXT	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,8 @@
++This is an optional add-on app, flatpages.
++
++For full documentation, see either of these:
++
++    * The file django/docs/flatpages.txt in the Django distribution
++    * <A HREF="http://www.djangoproject.com/documentation/flatpages/">http://www.djangoproject.com/documentation/flatpages/</A> on the Web
++
++Both have identical content.
+\ No newline at end of file
+
+Added: trunk/support/django_src/django/contrib/flatpages/__init__.py
+===================================================================
+
+Added: trunk/support/django_src/django/contrib/flatpages/middleware.py
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/middleware.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/middleware.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,15 @@
++from django.contrib.flatpages.views import flatpage
++from django.conf.settings import DEBUG
++
++class FlatpageFallbackMiddleware:
++    def process_response(self, request, response):
++        if response.status_code != 404:
++            return response # No need to check for a flatpage for non-404 responses.
++        try:
++            return flatpage(request, request.path)
++        # Return the original response if any errors happened. Because this
++        # is a middleware, we can't assume the errors will be caught elsewhere.
++        except:
++            if DEBUG:
++                raise
++            return response
+
+Added: trunk/support/django_src/django/contrib/flatpages/models/__init__.py
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/models/__init__.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/models/__init__.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1 @@
++__all__ = ['flatpages']
+
+Added: trunk/support/django_src/django/contrib/flatpages/models/flatpages.py
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/models/flatpages.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/models/flatpages.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,33 @@
++from django.core import meta, validators
++from django.models.core import Site
++from django.utils.translation import gettext_lazy as _
++
++class FlatPage(meta.Model):
++    url = meta.CharField(_('URL'), maxlength=100, validator_list=[validators.isAlphaNumericURL],
++        help_text=_(&quot;Example: '/about/contact/'. Make sure to have leading and trailing slashes.&quot;))
++    title = meta.CharField(_('title'), maxlength=200)
++    content = meta.TextField(_('content'))
++    enable_comments = meta.BooleanField(_('enable comments'))
++    template_name = meta.CharField(_('template name'), maxlength=70, blank=True,
++        help_text=_(&quot;Example: 'flatpages/contact_page'. If this isn't provided, the system will use 'flatpages/default'.&quot;))
++    registration_required = meta.BooleanField(_('registration required'), help_text=_(&quot;If this is checked, only logged-in users will be able to view the page.&quot;))
++    sites = meta.ManyToManyField(Site)
++    class META:
++        db_table = 'django_flatpages'
++        verbose_name = _('flat page')
++        verbose_name_plural = _('flat pages')
++        ordering = ('url',)
++        admin = meta.Admin(
++            fields = (
++                (None, {'fields': ('url', 'title', 'content', 'sites')}),
++                ('Advanced options', {'classes': 'collapse', 'fields': ('enable_comments', 'registration_required', 'template_name')}),
++            ),
++            list_filter = ('sites',),
++            search_fields = ('url', 'title'),
++        )
++
++    def __repr__(self):
++        return &quot;%s -- %s&quot; % (self.url, self.title)
++
++    def get_absolute_url(self):
++        return self.url
+
+Added: trunk/support/django_src/django/contrib/flatpages/urls.py
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/urls.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/urls.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,5 @@
++from django.conf.urls.defaults import *
++
++urlpatterns = patterns('django.contrib.flatpages.views',
++    (r'^(?P&lt;url&gt;.*)$', 'flatpage'),
++)
+
+Added: trunk/support/django_src/django/contrib/flatpages/views.py
+===================================================================
+--- trunk/support/django_src/django/contrib/flatpages/views.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/flatpages/views.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,35 @@
++from django.core import template_loader
++from django.core.extensions import get_object_or_404, DjangoContext
++from django.models.flatpages import flatpages
++from django.utils.httpwrappers import HttpResponse
++from django.conf.settings import SITE_ID
++
++DEFAULT_TEMPLATE = 'flatpages/default'
++
++def flatpage(request, url):
++    &quot;&quot;&quot;
++    Flat page view.
++
++    Models: `flatpages.flatpages`
++    Templates: Uses the template defined by the ``template_name`` field,
++        or `flatpages/default` if template_name is not defined.
++    Context:
++        flatpage
++            `flatpages.flatpages` object
++    &quot;&quot;&quot;
++    if not url.startswith('/'):
++        url = &quot;/&quot; + url
++    f = get_object_or_404(flatpages, url__exact=url, sites__id__exact=SITE_ID)
++    # If registration is required for accessing this page, and the user isn't
++    # logged in, redirect to the login page.
++    if f.registration_required and request.user.is_anonymous():
++        from django.views.auth.login import redirect_to_login
++        return redirect_to_login(request.path)
++    if f.template_name:
++        t = template_loader.select_template((f.template_name, DEFAULT_TEMPLATE))
++    else:
++        t = template_loader.get_template(DEFAULT_TEMPLATE)
++    c = DjangoContext(request, {
++        'flatpage': f,
++    })
++    return HttpResponse(t.render(c))
+
+Added: trunk/support/django_src/django/contrib/redirects/README.TXT
+===================================================================
+--- trunk/support/django_src/django/contrib/redirects/README.TXT	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/redirects/README.TXT	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,8 @@
++This is an optional add-on app, redirects.
++
++For full documentation, see either of these:
++
++    * The file django/docs/redirects.txt in the Django distribution
++    * <A HREF="http://www.djangoproject.com/documentation/redirects/">http://www.djangoproject.com/documentation/redirects/</A> on the Web
++
++Both have identical content.
+\ No newline at end of file
+
+Added: trunk/support/django_src/django/contrib/redirects/__init__.py
+===================================================================
+
+Added: trunk/support/django_src/django/contrib/redirects/middleware.py
+===================================================================
+--- trunk/support/django_src/django/contrib/redirects/middleware.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/redirects/middleware.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,27 @@
++from django.models.redirects import redirects
++from django.utils import httpwrappers
++from django.conf.settings import APPEND_SLASH, SITE_ID
++
++class RedirectFallbackMiddleware:
++    def process_response(self, request, response):
++        if response.status_code != 404:
++            return response # No need to check for a redirect for non-404 responses.
++        path = request.get_full_path()
++        try:
++            r = redirects.get_object(site__id__exact=SITE_ID, old_path__exact=path)
++        except redirects.RedirectDoesNotExist:
++            r = None
++        if r is None and APPEND_SLASH:
++            # Try removing the trailing slash.
++            try:
++                r = redirects.get_object(site__id__exact=SITE_ID,
++                    old_path__exact=path[:path.rfind('/')]+path[path.rfind('/')+1:])
++            except redirects.RedirectDoesNotExist:
++                pass
++        if r is not None:
++            if r == '':
++                return httpwrappers.HttpResponseGone()
++            return httpwrappers.HttpResponseRedirect(r.new_path)
++
++        # No redirect was found. Return the response.
++        return response
+
+Added: trunk/support/django_src/django/contrib/redirects/models/__init__.py
+===================================================================
+--- trunk/support/django_src/django/contrib/redirects/models/__init__.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/redirects/models/__init__.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1 @@
++__all__ = ['redirects']
+
+Added: trunk/support/django_src/django/contrib/redirects/models/redirects.py
+===================================================================
+--- trunk/support/django_src/django/contrib/redirects/models/redirects.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/redirects/models/redirects.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,23 @@
++from django.core import meta
++from django.models.core import Site
++from django.utils.translation import gettext_lazy as _
++
++class Redirect(meta.Model):
++    site = meta.ForeignKey(Site, radio_admin=meta.VERTICAL)
++    old_path = meta.CharField(_('redirect from'), maxlength=200, db_index=True,
++        help_text=_(&quot;This should be an absolute path, excluding the domain name. Example: '/events/search/'.&quot;))
++    new_path = meta.CharField(_('redirect to'), maxlength=200, blank=True,
++        help_text=_(&quot;This can be either an absolute path (as above) or a full URL starting with '<A HREF="http://">http://</A>'.&quot;))
++    class META:
++        verbose_name = _('redirect')
++        verbose_name_plural = _('redirects')
++        db_table = 'django_redirects'
++        unique_together=(('site', 'old_path'),)
++        ordering = ('old_path',)
++        admin = meta.Admin(
++            list_filter = ('site',),
++            search_fields = ('old_path', 'new_path'),
++        )
++
++    def __repr__(self):
++        return &quot;%s ---&gt; %s&quot; % (self.old_path, self.new_path)
+
+Added: trunk/support/django_src/django/contrib/syndication/__init__.py
+===================================================================
+
+Added: trunk/support/django_src/django/contrib/syndication/feeds.py
+===================================================================
+--- trunk/support/django_src/django/contrib/syndication/feeds.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/syndication/feeds.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,106 @@
++from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
++from django.core.template import Context, loader, Template, TemplateDoesNotExist
++from django.models.core import sites
++from django.utils import feedgenerator
++from django.conf.settings import LANGUAGE_CODE, SETTINGS_MODULE
++
++def add_domain(domain, url):
++    if not url.startswith('<A HREF="http://">http://</A>'):
++        url = u'<A HREF="http://%s%s">http://%s%s</A>' % (domain, url)
++    return url
++
++class FeedDoesNotExist(ObjectDoesNotExist):
++    pass
++
++class Feed:
++    item_pubdate = None
++    item_enclosure_url = None
++    feed_type = feedgenerator.DefaultFeed
++
++    def __init__(self, slug, feed_url):
++        self.slug = slug
++        self.feed_url = feed_url
++
++    def item_link(self, item):
++        try:
++            return item.get_absolute_url()
++        except AttributeError:
++            raise ImproperlyConfigured, &quot;Give your %s class a get_absolute_url() method, or define an item_link() method in your Feed class.&quot; % item.__class__.__name__
++
++    def __get_dynamic_attr(self, attname, obj, default=None):
++        try:
++            attr = getattr(self, attname)
++        except AttributeError:
++            return default
++        if callable(attr):
++            try:
++                return attr(obj)
++            except TypeError:
++                return attr()
++        return attr
++
++    def get_feed(self, url=None):
++        &quot;&quot;&quot;
++        Returns a feedgenerator.DefaultFeed object, fully populated, for
++        this feed. Raises FeedDoesNotExist for invalid parameters.
++        &quot;&quot;&quot;
++        if url:
++            try:
++                obj = self.get_object(url.split('/'))
++            except (AttributeError, ObjectDoesNotExist):
++                raise FeedDoesNotExist
++        else:
++            obj = None
++
++        current_site = sites.get_current()
++        link = self.__get_dynamic_attr('link', obj)
++        link = add_domain(current_site.domain, link)
++
++        feed = self.feed_type(
++            title = self.__get_dynamic_attr('title', obj),
++            link = link,
++            description = self.__get_dynamic_attr('description', obj),
++            language = LANGUAGE_CODE.decode(),
++            feed_url = add_domain(current_site, self.feed_url),
++            author_name = self.__get_dynamic_attr('author_name', obj),
++            author_link = self.__get_dynamic_attr('author_link', obj),
++            author_email = self.__get_dynamic_attr('author_email', obj),
++        )
++
++        try:
++            title_template = loader.get_template('feeds/%s_title' % self.slug)
++        except TemplateDoesNotExist:
++            title_template = Template('{{ obj }}')
++        try:
++            description_template = loader.get_template('feeds/%s_description' % self.slug)
++        except TemplateDoesNotExist:
++            description_template = Template('{{ obj }}')
++
++        for item in self.__get_dynamic_attr('items', obj):
++            link = add_domain(current_site.domain, self.__get_dynamic_attr('item_link', item))
++            enc = None
++            enc_url = self.__get_dynamic_attr('item_enclosure_url', item)
++            if enc_url:
++                enc = feedgenerator.Enclosure(
++                    url = enc_url.decode('utf-8'),
++                    length = str(self.__get_dynamic_attr('item_enclosure_length', item)).decode('utf-8'),
++                    mime_type = self.__get_dynamic_attr('item_enclosure_mime_type', item).decode('utf-8'),
++                )
++            author_name = self.__get_dynamic_attr('item_author_name', item)
++            if author_name is not None:
++                author_email = self.__get_dynamic_attr('item_author_email', item)
++                author_link = self.__get_dynamic_attr('item_author_link', item)
++            else:
++                author_email = author_link = None
++            feed.add_item(
++                title = title_template.render(Context({'obj': item, 'site': current_site})).decode('utf-8'),
++                link = link,
++                description = description_template.render(Context({'obj': item, 'site': current_site})).decode('utf-8'),
++                unique_id = link,
++                enclosure = enc,
++                pubdate = self.__get_dynamic_attr('item_pubdate', item),
++                author_name = author_name,
++                author_email = author_email,
++                author_link = author_link,
++            )
++        return feed
+
+Added: trunk/support/django_src/django/contrib/syndication/views.py
+===================================================================
+--- trunk/support/django_src/django/contrib/syndication/views.py	2005-11-17 00:28:38 UTC (rev 10)
++++ trunk/support/django_src/django/contrib/syndication/views.py	2005-11-17 00:36:03 UTC (rev 11)
+@@ -0,0 +1,26 @@
++from django.contrib.syndication import feeds
++from django.core.exceptions import Http404
++from django.utils.httpwrappers import HttpResponse
++
++def feed(request, url, feed_dict=None):
++    if not feed_dict:
++        raise Http404, &quot;No feeds are registered.&quot;
++
++    try:
++        slug, param = url.split('/', 1)
++    except ValueError:
++        slug, param = url, ''
++
++    try:
++        f = feed_dict[slug]
++    except KeyError:
++        raise Http404, &quot;Slug %r isn't registered.&quot; % slug
++
++    try:
++        feedgen = f(slug, request.path).get_feed(param)
++    except feeds.FeedDoesNotExist:
++        raise Http404, &quot;Invalid feed parameters. Slug %r is valid, but other parameters, or lack thereof, are not.&quot; % slug
++
++    response = HttpResponse(mimetype=feedgen.mime_type)
++    feedgen.write(response, 'utf-8')
++    return response
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000009.html">[Gappy-svn] r10 - trunk/docs
+</A></li>
+	<LI>Next message: <A HREF="000011.html">[Gappy-svn] r12 - trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

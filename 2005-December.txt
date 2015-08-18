@@ -1,0 +1,372 @@
+From drinian at berlios.de  Wed Dec 21 02:00:52 2005
+From: drinian at berlios.de (drinian at berlios.de)
+Date: Wed, 21 Dec 2005 02:00:52 +0100
+Subject: [Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views
+Message-ID: <200512210100.jBL10qs1032753@sheep.berlios.de>
+
+Author: drinian
+Date: 2005-12-21 02:00:20 +0100 (Wed, 21 Dec 2005)
+New Revision: 19
+
+Added:
+   trunk/gappy/apps/gappy/
+   trunk/gappy/apps/gappy/__init__.py
+   trunk/gappy/apps/gappy/__init__.pyc
+   trunk/gappy/apps/gappy/models/
+   trunk/gappy/apps/gappy/models/__init__.py
+   trunk/gappy/apps/gappy/models/gappy.py
+   trunk/gappy/apps/gappy/views.py
+   trunk/gappy/apps/gappy/views/
+   trunk/gappy/apps/gappy/views/__init__.py
+Modified:
+   trunk/gappy/settings.py
+Log:
+Started work on the data model. Incomplete, but the project has now been 
+initialized.
+
+
+Added: trunk/gappy/apps/gappy/__init__.py
+===================================================================
+
+Added: trunk/gappy/apps/gappy/__init__.pyc
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/gappy/apps/gappy/__init__.pyc
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/gappy/apps/gappy/models/__init__.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/__init__.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/models/__init__.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1 @@
++__all__ = ['gappy']
+
+Added: trunk/gappy/apps/gappy/models/gappy.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/gappy.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/models/gappy.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1,19 @@
++from django.core import meta
++
++# Create your models here.
++class User(meta.Model):
++    username = meta.CharField(maxlength=20)
++    passwd = meta.CharField(maxlength=20)
++    real_name = meta.TextField(maxlength=50)
++    superuser = meta.BooleanField()
++
++class Course(meta.Model):
++    cid = meta.IntegerField()
++    cname = meta.TextField(maxlength=100)
++
++class Project(meta.Model):
++    pid = meta.IntegerField()
++    pname = meta.TextField(maxlength=100)
++
++class DemoTime(meta.Model):
++    time = meta.DateTimeField()
+
+Added: trunk/gappy/apps/gappy/views/__init__.py
+===================================================================
+
+Added: trunk/gappy/apps/gappy/views.py
+===================================================================
+--- trunk/gappy/apps/gappy/views.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/views.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1 @@
++# Create your views here.
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/settings.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -8,7 +8,7 @@
+ 
+ MANAGERS = ADMINS
+ 
+-DATABASE_ENGINE = 'postgresql' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
++DATABASE_ENGINE = 'sqlite3' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+ DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+ DATABASE_USER = ''             # Not used with sqlite3.
+ DATABASE_PASSWORD = ''         # Not used with sqlite3.
+@@ -62,4 +62,5 @@
+ )
+ 
+ INSTALLED_APPS = (
++    'gappy.apps.gappy',
+ )
+
+
+
+From drinian at berlios.de  Fri Dec 23 18:38:22 2005
+From: drinian at berlios.de (drinian at berlios.de)
+Date: Fri, 23 Dec 2005 18:38:22 +0100
+Subject: [Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+Message-ID: <200512231738.jBNHcMNp006165@sheep.berlios.de>
+
+Author: drinian
+Date: 2005-12-23 18:38:13 +0100 (Fri, 23 Dec 2005)
+New Revision: 20
+
+Modified:
+   trunk/gappy/apps/gappy/models/gappy.py
+   trunk/gappy/settings.py
+Log:
+Ok, the data model seems to be fully functional.
+
+Note that in order to use it you will have to initialize and populate 
+your own database file. The way to do that is:
+
+django-admin.py init
+django-admin.py install gappy
+
+Note that this will create a file named gappy.db in your current 
+directory, so choose wisely. The other nice part of this is that you can 
+reset your test data by deleting gappy.db and repeating the two above 
+steps.
+
+
+
+Modified: trunk/gappy/apps/gappy/models/gappy.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/gappy.py	2005-12-21 01:00:20 UTC (rev 19)
++++ trunk/gappy/apps/gappy/models/gappy.py	2005-12-23 17:38:13 UTC (rev 20)
+@@ -1,19 +1,29 @@
+ from django.core import meta
++from django.models.auth import User
+ 
+-# Create your models here.
+-class User(meta.Model):
+-    username = meta.CharField(maxlength=20)
+-    passwd = meta.CharField(maxlength=20)
+-    real_name = meta.TextField(maxlength=50)
+-    superuser = meta.BooleanField()
+-
++# Understand that a user can represent one of two things:
++# 1) A group of students.
++# 2) A single person acting as an administrator.
++#
++# This is why users only belong to one class.
+ class Course(meta.Model):
+-    cid = meta.IntegerField()
+     cname = meta.TextField(maxlength=100)
+ 
++class GappyUser(meta.Model):
++    class META:
++        permissions = (
++            ("can_set_appointment", "Can create or delete appointment times"),
++            ("can_choose_appointment", "Can choose an appointment time"),
++            )
++    user = meta.OneToOneField(User)
++    course = meta.ForeignKey(Course)
++
+ class Project(meta.Model):
+-    pid = meta.IntegerField()
+     pname = meta.TextField(maxlength=100)
++    course = meta.ForeignKey(Course)
+ 
+ class DemoTime(meta.Model):
+     time = meta.DateTimeField()
++    demoer = meta.ForeignKey(GappyUser)
++    demoee = meta.ForeignKey(GappyUser)
++    course = meta.ForeignKey(Course)
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-12-21 01:00:20 UTC (rev 19)
++++ trunk/gappy/settings.py	2005-12-23 17:38:13 UTC (rev 20)
+@@ -1,4 +1,5 @@
+ # Django settings for gappy project.
++import os
+ 
+ DEBUG = True
+ 
+@@ -9,7 +10,7 @@
+ MANAGERS = ADMINS
+ 
+ DATABASE_ENGINE = 'sqlite3' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
++DATABASE_NAME = os.path.join(os.getcwd(), "gappy.db")  # Or path to database file if using sqlite3.
+ DATABASE_USER = ''             # Not used with sqlite3.
+ DATABASE_PASSWORD = ''         # Not used with sqlite3.
+ DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+
+
+
+From drinian at berlios.de  Sat Dec 31 02:46:33 2005
+From: drinian at berlios.de (drinian at berlios.de)
+Date: Sat, 31 Dec 2005 02:46:33 +0100
+Subject: [Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy
+Message-ID: <200512310146.jBV1kXQJ030047@sheep.berlios.de>
+
+Author: drinian
+Date: 2005-12-31 02:46:07 +0100 (Sat, 31 Dec 2005)
+New Revision: 21
+
+Added:
+   trunk/gappy/templates/
+   trunk/gappy/templates/gappy/
+   trunk/gappy/templates/gappy/index.html
+   trunk/gappy/templates/gappy/login.html
+Modified:
+   trunk/gappy/apps/gappy/views.py
+   trunk/gappy/settings.py
+   trunk/gappy/urls.py
+Log:
+Login code is working, mostly. It's an example of how to do it, anyway, 
+which is fairly undocumented.
+
+Django permissions do not work yet. Maybe later.
+
+If anyone else wants to take up this project for a while, go for it. I'm 
+off to greener pastures. Happy New Year!
+
+
+Modified: trunk/gappy/apps/gappy/views.py
+===================================================================
+--- trunk/gappy/apps/gappy/views.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/apps/gappy/views.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -1 +1,39 @@
+-# Create your views here.
++from django.core.template import Context, loader
++from django.models.gappy import gappyusers
++from django.models.auth import users
++from django.utils.httpwrappers import HttpResponse, HttpResponseRedirect
++from django.core.extensions import render_to_response
++from django.views.decorators.auth import login_required
++
++ at login_required
++def index(request):
++    t = loader.get_template("gappy/index")
++    c = Context({})
++    return HttpResponse(t.render(c))
++
++def login(request):
++    try:
++        user = users.get_object(username__exact=request.POST["username"])
++        if not user.check_password(request.POST["password"]):
++            raise users.UserDoesNotExist
++        # set the session's user active
++        request.session[users.SESSION_KEY] = user.id
++        try:
++            nextpage = request.GET["next"]
++        except KeyError:
++            nextpage = "/gappy/"
++        return HttpResponseRedirect(nextpage)
++    except KeyError:
++        return render_to_response("gappy/login")
++    except users.UserDoesNotExist:
++        t = loader.get_template("gappy/login")
++        c = Context({"error":"Some login information was wrong."})
++        return HttpResponse(t.render(c))
++
++def logout(request):
++    try:
++        del request.session[users.SESSION_KEY]
++    except KeyError:
++        return HttpResponse("Already logged out.")
++    else:
++        return HttpResponse("You have been logged out.")
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/settings.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -60,6 +60,7 @@
+ 
+ TEMPLATE_DIRS = (
+     # Put strings here, like "/home/html/django_templates".
++    os.path.join(os.getcwd(), "templates")
+ )
+ 
+ INSTALLED_APPS = (
+
+Added: trunk/gappy/templates/gappy/index.html
+===================================================================
+--- trunk/gappy/templates/gappy/index.html	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/templates/gappy/index.html	2005-12-31 01:46:07 UTC (rev 21)
+@@ -0,0 +1,24 @@
++<!DOCTYPE html
++PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
++"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
++<html>
++<head>
++	<title>Welcome to GAPPy</title>
++	<link rel="stylesheet" TYPE="text/css" HREF="style.css" />
++</head>
++<body>
++{% if perms.gappy %}
++{% if perms.gappy.can_set_appointment %}
++<p>You are already logged in and should go to <a href="instructor/">your homepage</a>.</p>
++{% else %}
++{% if perms.gappy.can_choose_appointment %}
++<p>You are already logged in and should go to <a href="group/">your homepage</a>.</p>
++{% else %}
++<p>You are logged in but don't seem to have any rights.</p>
++{% endif %}
++{% endif %}
++{% else %}
++<p>You are not logged in.</p>
++{% endif %}
++</body>
++</html>
+
+Added: trunk/gappy/templates/gappy/login.html
+===================================================================
+--- trunk/gappy/templates/gappy/login.html	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/templates/gappy/login.html	2005-12-31 01:46:07 UTC (rev 21)
+@@ -0,0 +1,31 @@
++<!DOCTYPE html
++PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
++"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
++<html>
++<head>
++	<title>Welcome to GAPPy</title>
++	<link rel="stylesheet" TYPE="text/css" HREF="style.css" />
++</head>
++<body>
++	<img id="gappy_logo" src="GAPPyLogo.png"/>
++{%if error %}
++<p>{{ error }}</p>
++{% endif %}
++	<table id="login">
++		<form method="post">
++			<!-- <h1>Login</h1> -->
++			<tr class="input_row">
++				<td class="label">username:</td>
++				<td class="input"><input type="text" name="username"></td>
++			</tr>
++			<tr class="input_row">
++				<td class="label">password:</td>
++				<td class="input"><input type="password" name="password"/></td>
++			</tr>
++			<tr class="input_row">
++			     <td colspan="2"><input type="submit" value="Login"/></td>
++            </tr>	
++		</form>
++	</table>
++</body>
++</html>
+\ No newline at end of file
+
+Modified: trunk/gappy/urls.py
+===================================================================
+--- trunk/gappy/urls.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/urls.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -6,4 +6,9 @@
+ 
+     # Uncomment this for admin:
+ #     (r'^admin/', include('django.contrib.admin.urls.admin')),
++    (r'^accounts/login/', 'gappy.apps.gappy.views.login'),
++    (r'^accounts/logout/', 'gappy.apps.gappy.views.logout'),
++    (r'^gappy/$', 'gappy.apps.gappy.views.index'),
++    (r'^gappy/group/$', 'gappy.apps.gappy.views.group'),
++    (r'^gappy/instructor/$', 'gappy.apps.gappy.views.instructor')
+ )
+
+
+

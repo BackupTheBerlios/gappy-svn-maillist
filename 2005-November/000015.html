@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r16 - in trunk/docs: . html
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r16%20-%20in%20trunk/docs%3A%20.%20html&In-Reply-To=%3C200511180233.jAI2Xhxo013967%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000014.html">
+   <LINK REL="Next"  HREF="000016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r16 - in trunk/docs: . html</H1>
+    <B>drinian at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r16%20-%20in%20trunk/docs%3A%20.%20html&In-Reply-To=%3C200511180233.jAI2Xhxo013967%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r16 - in trunk/docs: . html">drinian at berlios.de
+       </A><BR>
+    <I>Fri Nov 18 03:33:43 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000014.html">[Gappy-svn] r15 - in trunk: . mockups mockups/admin
+</A></li>
+        <LI>Next message: <A HREF="000016.html">[Gappy-svn] r17 - in trunk/mockups: . student
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: drinian
+Date: 2005-11-18 03:33:28 +0100 (Fri, 18 Nov 2005)
+New Revision: 16
+
+Added:
+   trunk/docs/teams
+Modified:
+   trunk/docs/html/spec.html
+   trunk/docs/spec.txt
+Log:
+Significantly changed the spec. Added a &quot;teams&quot; document with a clearer list of 
+who is assigned to each task.
+
+
+Modified: trunk/docs/html/spec.html
+===================================================================
+--- trunk/docs/html/spec.html	2005-11-17 02:21:51 UTC (rev 15)
++++ trunk/docs/html/spec.html	2005-11-18 02:33:28 UTC (rev 16)
+@@ -1,147 +1,136 @@
++
+ &lt;html&gt;
+-    &lt;head&gt;
+-        &lt;title&gt;GAPPy Functional Specification&lt;/title&gt;
+-    &lt;/head&gt;
+-    &lt;body&gt;
+-        
+-        &lt;h1 id=&quot;group_appointment_calendar_for_python&quot;&gt;Group Appointment Calendar for Python&lt;/h1&gt;
++  &lt;head&gt;&lt;title&gt;spec.txt&lt;/title&gt;&lt;/head&gt;
++  &lt;body&gt;
++&lt;h1&gt;Group Appointment Calendar for Python&lt;/h1&gt;
+ 
+-        &lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
++&lt;h2&gt;Overview&lt;/h2&gt;
+ 
+-        &lt;p&gt;The Group Appointment Calendar for Python aims to provide a mechanism for
+-        students to schedule demo appointments with instructors. Teachers or TAs make
+-        a list of times for which they are available, and then students in groups sign
+-        up to come to a given appointment.&lt;/p&gt;
++&lt;p&gt;The Group Appointment Calendar for Python aims to provide a mechanism for
++students to schedule demo appointments with instructors. Teachers or TAs make
++a list of times for which they are available, and then students in groups sign
++up to come to a given appointment.&lt;/p&gt;
+ 
+-        &lt;h2 id=&quot;major_features&quot;&gt;Major Features&lt;/h2&gt;
++&lt;h2&gt;Major Features&lt;/h2&gt;
+ 
+-        &lt;ul&gt;
+-        &lt;li&gt;Students can be formed into groups that set up a single appointment time&lt;/li&gt;
+-        &lt;li&gt;Data can be stored in any SQL-compliant database back-end to provide
+-        reliability and interoperability with third-party clients&lt;/li&gt;
+-        &lt;li&gt;Web-based front-end ensures universal accessibility from anywhere on
+-        campus&lt;/li&gt;
+-        &lt;li&gt;Low system requirements ensure that even junked PCs  can be used as a host&lt;/li&gt;
+-        &lt;li&gt;Python-powered core using the &lt;a href=&quot;<A HREF="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</A>&quot; title=&quot;Berkeley System Design License&quot;&gt;Django&lt;/a&gt; framework for fast development
+-        and easy extendibility&lt;/li&gt;
+-        &lt;/ul&gt;
++&lt;ul&gt;
++&lt;li&gt;Students can be formed into groups that set up a single appointment time&lt;/li&gt;
++&lt;li&gt;Data can be stored in any SQL-compliant database back-end to provide
++reliability and interoperability with third-party clients&lt;/li&gt;
++&lt;li&gt;Web-based front-end ensures universal accessibility from anywhere on
++campus&lt;/li&gt;
++&lt;li&gt;Low system requirements ensure that even junked PCs  can be used as a host&lt;/li&gt;
++&lt;li&gt;Python-powered core using the &lt;a href=&quot;<A HREF="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</A>&quot; title=&quot;Berkeley System Design License&quot;&gt;Django&lt;/a&gt; framework for fast development
++and easy extendibility&lt;/li&gt;
++&lt;/ul&gt;
+ 
+-        &lt;h2 id=&quot;design_goals&quot;&gt;Design Goals&lt;/h2&gt;
++&lt;h2&gt;Design Goals&lt;/h2&gt;
+ 
+-        &lt;p&gt;Because this is an instructional product, we have a slightly different focus
+-        than normal. Our primary design goal is &lt;strong&gt;keep it simple&lt;/strong&gt;. This is not a
+-        programming course, but rather an opportunity to get involved in and launch an
+-        open-source project. As such, stay focused on the learning and not on the
+-        feature set. The other primary goal for this product is to make the product as
+-        easy-to-use as possible. This may well mean eschewing features in favor of
+-        simple, straightforward design and user interface. That's a good thing. Enjoy
+-        it.&lt;/p&gt;
++&lt;p&gt;Because this is an instructional product, we have a slightly different focus
++than normal. Our primary design goal is &lt;strong&gt;keep it simple&lt;/strong&gt;. This is not a
++programming course, but rather an opportunity to get involved in and launch an
++open-source project. As such, stay focused on the learning and not on the
++feature set. The other primary goal for this product is to make the product as
++easy-to-use as possible. This may well mean eschewing features in favor of
++simple, straightforward design and user interface. That's a good thing. Enjoy
++it.&lt;/p&gt;
+ 
+-        &lt;h2 id=&quot;case_study_dr_jablowme&quot;&gt;Case Study: Dr. Jablowme&lt;/h2&gt;
++&lt;h2&gt;Case Study: Dr. Jablowme&lt;/h2&gt;
+ 
+-        &lt;p&gt;Dr. Jablowme is a professor of occult studies at Duke University. For his OS
+-        118 course, students are required to analyze the internals of the Windows XP
+-        kernel, and, leveraging what they learned in class about conjuring demons from
+-        beyond the grave, cause a copy of Windows to materialize spontaneously in thin
+-        air. This demonstration must be performed in front of Dr. Jablowme during a
+-        period of his day when he is available to deal with the &quot;Lesser Minds&quot; of
+-        undergraduate students. To enable students to do this, Dr. Jablowme sits
+-        himself in front of his Apple Macintosh LC III, fires up Netscape Navigator
+-        3.2, and navigates to the site where his department's copy of GAPPy is housed.&lt;/p&gt;
++&lt;p&gt;Dr. Jablowme is a professor of occult studies at Duke University. For his OS
++118 course, students are required to analyze the internals of the Windows XP
++kernel, and, leveraging what they learned in class about conjuring demons from
++beyond the grave, cause a copy of Windows to materialize spontaneously in thin
++air. This demonstration must be performed in front of Dr. Jablowme during a
++period of his day when he is available to deal with the &quot;Lesser Minds&quot; of
++undergraduate students. To enable students to do this, Dr. Jablowme sits
++himself in front of his Apple Macintosh LC III, fires up Netscape Navigator
++3.2, and navigates to the site where his department's copy of GAPPy is housed.&lt;/p&gt;
+ 
+-        &lt;p&gt;Upon reaching the site, Dr. Jablowme is asked for a username and password. He
+-        dutifully types in BUFFY and TOH_OS_SI, respectively, then clicks &quot;Login.&quot;
+-        In a moment, he is presented with his main screen. It is divided into three
+-        columns. In the rightmost column is a list of all upcoming appointments
+-        scheduled in the system for the next three days, along with which class and
+-        assignment it is for. Slots that he has made himself available for that are
+-        not yet full are also listed as being reserved but open. Clicking on any of
+-        these appointments or reserved times would take him to a screen where he could
+-        reopen the appointment (meaning that students would lose their reservation) or
+-        break the appointment entirely, removing it from the list of available meeting
+-        times. The middle column is currently blank.&lt;/p&gt;
++&lt;p&gt;Upon reaching the site, Dr. Jablowme is asked for a username and password. He
++dutifully types in BUFFY and TOH_OS_SI, respectively, then clicks &quot;Login.&quot;
++In a moment, he is presented with his main screen. It is divided into three
++columns. In the rightmost column is a list of all upcoming appointments
++scheduled in the system for the next three days, along with which class and
++assignment it is for. Slots that he has made himself available for that are
++not yet full are also listed as being reserved but open. Clicking on any of
++these appointments or reserved times would take him to a screen where he could
++reopen the appointment (meaning that students would lose their reservation) or
++break the appointment entirely, removing it from the list of available meeting
++times. The middle column is currently blank.&lt;/p&gt;
+ 
+-        &lt;p&gt;&lt;img src=&quot;profhome.png&quot; alt=&quot;Professor's Home Screen&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
++&lt;p&gt;&lt;img src=&quot;profhome.png&quot; alt=&quot;Professor's Home Screen&quot;/&gt;&lt;/p&gt;
+ 
+-        &lt;p&gt;Dr. Jablowme clicks on his &quot;Occult Studies&quot; class in the leftmost column. The
+-        middle column suddenly fills up with a list of demos. Because Dr. Jablowme has
+-        not yet created a demo for students to demonstrate their ability to create the
+-        undead, he clicks the &quot;Add Demo&quot; link at the bottom of the middle column. In
+-        the next screen, he is prompted to name the demo period. He names it &quot;Raising
+-        Undead.&quot; Below the text field asking for his name are two buttons marked
+-        &quot;Cancel&quot; and &quot;Continue.&quot; He clicks the &quot;Continue&quot; button.&lt;/p&gt;
++&lt;p&gt;Dr. Jablowme clicks on his &quot;Occult Studies&quot; class in the leftmost column. The
++middle column suddenly fills up with a list of demos. Because Dr. Jablowme has
++not yet created a demo for students to demonstrate their ability to create the
++undead, he clicks the &quot;Add Demo&quot; link at the bottom of the middle column. In
++the next screen, he is prompted to name the demo period. He names it &quot;Raising
++Undead.&quot; Below the text field asking for his name are two buttons marked
++&quot;Cancel&quot; and &quot;Continue.&quot; He clicks the &quot;Continue&quot; button.&lt;/p&gt;
+ 
+-        &lt;p&gt;Next, Dr. Jablowme is asked to list times that he is available. There is a
+-        single text field, to the right of which is a small calendar image that brings
+-        up a calendar, and to the right of that a button marked &quot;Add.&quot; Dr. Jablowme
+-        remembers that the assignment's due on the 8th of November and likes to get
+-        started early, so he types in &quot;9 November 2005 2:55 PM&quot; and then hits the
+-        &quot;Add&quot; button. Now, in an area just below the text box, he sees the text
+-        &quot;Wednesday, November 9, at 2:55 PM&quot;. Oops; Dr. Jablowme always gets totally
+-        shitfaced on Tuesday. He won't be able to begin grading on Wednesday. He
+-        clicks a small trash can next to the time, deleting it from his potential
+-        appointments. He now clicks the calendar widget and selects the 10th of
+-        November, a Thursday. He clicks Add again, and now a good time is shown. Dr.
+-        Jablowme repeats the process until he's created nearly a dozen potential
+-        appointment times.&lt;/p&gt;
++&lt;p&gt;Next, Dr. Jablowme is asked to list times that he is available. There is a
++single text field, to the right of which is a small calendar image that brings
++up a calendar, and to the right of that a button marked &quot;Add.&quot; Dr. Jablowme
++remembers that the assignment's due on the 8th of November and likes to get
++started early, so he types in &quot;9 November 2005 2:55 PM&quot; and then hits the
++&quot;Add&quot; button. Now, in an area just below the text box, he sees the text
++&quot;Wednesday, November 9, at 2:55 PM&quot;. Oops; Dr. Jablowme always gets totally
++shitfaced on Tuesday. He won't be able to begin grading on Wednesday. He
++clicks a small trash can next to the time, deleting it from his potential
++appointments. He now clicks the calendar widget and selects the 10th of
++November, a Thursday. He clicks Add again, and now a good time is shown. Dr.
++Jablowme repeats the process until he's created nearly a dozen potential
++appointment times.&lt;/p&gt;
+ 
+-        &lt;p&gt;On the right side of the screen is a button marked &quot;Cancel,&quot; a button marked
+-        &quot;Go Back,&quot; and another marked &quot;Finish.&quot; Dr. Jablowme clicks Finish. He is now
+-        returned to his home screen; a message at the top says, &quot;Appointments
+-        Created!&quot; Dr. Jablowme smiles serenely, gets up, and returns to his previous
+-        task of trying to find his eye of newt.&lt;/p&gt;
++&lt;p&gt;On the right side of the screen is a button marked &quot;Cancel,&quot; a button marked
++&quot;Go Back,&quot; and another marked &quot;Finish.&quot; Dr. Jablowme clicks Finish. He is now
++returned to his home screen; a message at the top says, &quot;Appointments
++Created!&quot; Dr. Jablowme smiles serenely, gets up, and returns to his previous
++task of trying to find his eye of newt.&lt;/p&gt;
+ 
+-        &lt;h2 id=&quot;case_study_larry_putz_mcclanahan&quot;&gt;Case Study: Larry Putz McClanahan&lt;/h2&gt;
++&lt;h2&gt;Case Study: Larry Putz McClanahan&lt;/h2&gt;
+ 
+-        &lt;p&gt;Larry is fifth-year sophomore at Duke University and a student in Dr.
+-        Jablowme's course of occult studies. For his Windows-conjuring project, he has
+-        opted to team up with Samantha Stevens and Genie Nelson. All three of them
+-        will be demoing at the same time. Because they have not yet made an
+-        appointment with Dr. Jablowme, Larry sits down at his homebuilt Pentium 9 with
+-        liquid-oxygen cooling systems, logs into a bootlegged alpha copy of Mac OS XI
+-        for Intel boxen, and uses his nightly build of Flock to go to
+-        <A HREF="http://occult.duke.edu/gappy.&lt;/p">http://occult.duke.edu/gappy.&lt;/p</A>&gt;
++&lt;p&gt;Larry is a sophomore at Duke University and a student in a compsci course. Within that course, he is assigned to a group with two other people. That group has a single login in the system.&lt;/p&gt;
+ 
+-        &lt;p&gt;Once logged in, Larry sees a much simpler screen than Dr. Jablowme: in the
+-        center of the screen is a list of his upcoming demos, along with what class
+-        they are for, which demo it is, and who his partners are. At the top of the
+-        list, though, Larry sees in white text on a red background, &quot;You have one
+-        unscheduled demo. Click here to schedule.&quot; He clicks it.&lt;/p&gt;
++&lt;p&gt;When the group wants to sign up for an appointment, they sit down in front of a computer and someone signs in using their group id and password.&lt;/p&gt;
+ 
+-        &lt;p&gt;On the next screen, Larry sees, little to his surprise, that he is setting up
+-        a demo to show his possessed Windows box. The screen is labeled &quot;Select Group Members.&quot; In two columns on the left-side of the screen, the program presents Larry with a list of all people in his class. Larry begins clicking names; as he does so, they form a list on the right side of the screen. At one point, Larry accidentally clicks the name &quot;Micky Mouse.&quot; In a red box at the top, the screen suddenly says, &quot;Micky could not be added because he is in another group.&quot; Larry sighs, annoyed, but now clicks on the right name. Once he has selected all the members of his group, he clicks the &quot;Next&quot; button.&lt;/p&gt;
++&lt;p&gt;Once logged in, they will be presented with a list of possible project demos that they can sign up for. Remember, the group login is tied to a specific class. There are multiple projects within each class, though. Generally speaking, a group will only sign up for one demo period per project.&lt;/p&gt;
+ 
+-        &lt;p&gt;Larry now sees a list of open demo slots. He clicks the one he wants and pushes next. He is asked via  JavaScript popup to confirm his selection. He confirms it, after which he is taken back to his home screen. The appointment he just made is now listed, and a moment later, he and all other group members receive an email confirming their appointment.&lt;/p&gt;
++&lt;p&gt;The group members select the project they want from a drop-down menu with a list of names, and click a button to proceed to the next screen. On this screen, there will be a list of possible demo times. Each will display a date, time, and the name of the TA or professor available at that time. There will be a radio button beside each option. To schedule a demo, the group selects one of the times and presses a submit button, giving them a confirmation page.&lt;/p&gt;
+ 
+-        &lt;h2 id=&quot;licenses&quot;&gt;Licenses&lt;/h2&gt;
++&lt;p&gt;Alternately, if the group has already signed up for a demo for that project, they will get a page telling them this when they select the project from the drop-down menu. They will then be presented with the option of cancelling this appointment so they can go back and schedule another.&lt;/p&gt;
+ 
+-        &lt;p&gt;The license for this project will initially be the &lt;a href=&quot;<A HREF="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</A>&quot; title=&quot;GNU General Public License&quot;&gt;GPL&lt;/a&gt;, although the fact
+-        that all copyright holders are trivially available ensures that we can change
+-        that later in the project if we wish. In particular, we likely want to examine
+-        at least the &lt;a href=&quot;<A HREF="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</A>&quot; title=&quot;Berkeley System Design License&quot;&gt;BSD&lt;/a&gt; license.&lt;/p&gt;
++&lt;p&gt;When all this is done, the group can log out by clicking a &quot;log out&quot; button present on all of the pages, thus gaining a false sense of security since it doesn't really do anything.&lt;/p&gt;
+ 
+-        &lt;h2 id=&quot;software_architecture&quot;&gt;Software Architecture&lt;/h2&gt;
++&lt;h2&gt;Licenses&lt;/h2&gt;
+ 
+-        &lt;p&gt;In order to allow us to complete this project in the next month, we will be
+-        using a Python-based web framework called Django. Django provides (relatively)
+-        transparent persistence, plus robust user management and administration
+-        interfaces. These should not be reinvented. The application should also follow
+-        the rigid model-view-controller (MVC) interface encouraged by Django.&lt;/p&gt;
++&lt;p&gt;The license for this project will initially be the &lt;a href=&quot;<A HREF="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</A>&quot; title=&quot;GNU General Public License&quot;&gt;GPL&lt;/a&gt;, although the fact
++that all copyright holders are trivially available ensures that we can change
++that later in the project if we wish. In particular, we likely want to examine
++at least the &lt;a href=&quot;<A HREF="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</A>&quot; title=&quot;Berkeley System Design License&quot;&gt;BSD&lt;/a&gt; license.&lt;/p&gt;
+ 
+-        &lt;p&gt;All remaining architectural decisions are yours. Once you all have come to a
+-        conclusion, update this specification.&lt;/p&gt;
++&lt;h2&gt;Software Architecture&lt;/h2&gt;
+ 
+-        &lt;h2 id=&quot;version_2_features&quot;&gt;Version 2 Features&lt;/h2&gt;
++&lt;p&gt;In order to allow us to complete this project in the next month, we will be
++using a Python-based web framework called Django. Django provides (relatively)
++transparent persistence, plus robust user management and administration
++interfaces. These should not be reinvented. The application should also follow
++the rigid model-view-controller (MVC) interface encouraged by Django.&lt;/p&gt;
+ 
+-        &lt;p&gt;The following are features that would be nice to have, but can safely be
+-        postponed to version two and still leave us with a working, useful product.&lt;/p&gt;
++&lt;p&gt;All remaining architectural decisions are yours. Once you all have come to a
++conclusion, update this specification.&lt;/p&gt;
+ 
+-        &lt;ol&gt;
+-        &lt;li&gt;The ability for group members to list their individual schedules and
+-         set up appointments specific to their individual groups.&lt;/li&gt;
+-        &lt;li&gt;Leveraging the above to provide automatic appointment proposals and
+-         potentially assignments&lt;/li&gt;
+-        &lt;/ol&gt;
++&lt;h2&gt;Version 2 Features&lt;/h2&gt;
+ 
+-    &lt;/body&gt;
+-&lt;/html&gt;
+\ No newline at end of file
++&lt;p&gt;The following are features that would be nice to have, but can safely be
++postponed to version two and still leave us with a working, useful product.&lt;/p&gt;
++
++&lt;ol&gt;
++&lt;li&gt;The ability for group members to list their individual schedules and
++ set up appointments specific to their individual groups.&lt;/li&gt;
++&lt;li&gt;Leveraging the above to provide automatic appointment proposals and
++ potentially assignments&lt;/li&gt;
++&lt;/ol&gt;
++  &lt;/body&gt;
++&lt;/html&gt;
+
+Modified: trunk/docs/spec.txt
+===================================================================
+--- trunk/docs/spec.txt	2005-11-17 02:21:51 UTC (rev 15)
++++ trunk/docs/spec.txt	2005-11-18 02:33:28 UTC (rev 16)
+@@ -93,26 +93,18 @@
+ Case Study: Larry Putz McClanahan
+ -----------------------------------
+ 
+-Larry is fifth-year sophomore at Duke University and a student in Dr.
+-Jablowme's course of occult studies. For his Windows-conjuring project, he has
+-opted to team up with Samantha Stevens and Genie Nelson. All three of them
+-will be demoing at the same time. Because they have not yet made an
+-appointment with Dr. Jablowme, Larry sits down at his homebuilt Pentium 9 with
+-liquid-oxygen cooling systems, logs into a bootlegged alpha copy of Mac OS XI
+-for Intel boxen, and uses his nightly build of Flock to go to
+-<A HREF="http://occult.duke.edu/gappy.">http://occult.duke.edu/gappy.</A>
++Larry is a sophomore at Duke University and a student in a compsci course. Within that course, he is assigned to a group with two other people. That group has a single login in the system.
+ 
+-Once logged in, Larry sees a much simpler screen than Dr. Jablowme: in the
+-center of the screen is a list of his upcoming demos, along with what class
+-they are for, which demo it is, and who his partners are. At the top of the
+-list, though, Larry sees in white text on a red background, &quot;You have one
+-unscheduled demo. Click here to schedule.&quot; He clicks it.
++When the group wants to sign up for an appointment, they sit down in front of a computer and someone signs in using their group id and password.
+ 
+-On the next screen, Larry sees, little to his surprise, that he is setting up
+-a demo to show his possessed Windows box. The screen is labeled &quot;Select Group Members.&quot; In two columns on the left-side of the screen, the program presents Larry with a list of all people in his class. Larry begins clicking names; as he does so, they form a list on the right side of the screen. At one point, Larry accidentally clicks the name &quot;Micky Mouse.&quot; In a red box at the top, the screen suddenly says, &quot;Micky could not be added because he is in another group.&quot; Larry sighs, annoyed, but now clicks on the right name. Once he has selected all the members of his group, he clicks the &quot;Next&quot; button.
++Once logged in, they will be presented with a list of possible project demos that they can sign up for. Remember, the group login is tied to a specific class. There are multiple projects within each class, though. Generally speaking, a group will only sign up for one demo period per project.
+ 
+-Larry now sees a list of open demo slots. He clicks the one he wants and pushes next. He is asked via  JavaScript popup to confirm his selection. He confirms it, after which he is taken back to his home screen. The appointment he just made is now listed, and a moment later, he and all other group members receive an email confirming their appointment.
++The group members select the project they want from a drop-down menu with a list of names, and click a button to proceed to the next screen. On this screen, there will be a list of possible demo times. Each will display a date, time, and the name of the TA or professor available at that time. There will be a radio button beside each option. To schedule a demo, the group selects one of the times and presses a submit button, giving them a confirmation page.
+ 
++Alternately, if the group has already signed up for a demo for that project, they will get a page telling them this when they select the project from the drop-down menu. They will then be presented with the option of cancelling this appointment so they can go back and schedule another.
++
++When all this is done, the group can log out by clicking a &quot;log out&quot; button present on all of the pages, thus gaining a false sense of security since it doesn't really do anything.
++
+ Licenses
+ --------
+ 
+
+Added: trunk/docs/teams
+===================================================================
+--- trunk/docs/teams	2005-11-17 02:21:51 UTC (rev 15)
++++ trunk/docs/teams	2005-11-18 02:33:28 UTC (rev 16)
+@@ -0,0 +1,31 @@
++Django project teams
++--------------------
++
++HTML 1 (Admin)
++-------------
++Peter Gebhard
++Seth Sokol
++
++HTML 2 (Student)
++----------------
++Bobby Buechler
++Curt Harting
++
++DB
++--
++Tyler Brock
++
++Generic Admin
++-------------
++Sumesh Chopra
++Jeremy Welch
++
++Student template
++----------------
++Ben Wolf
++Marcin Dobosz
++
++Admin template
++--------------
++Jinghui Lim
++Rob DeMason
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000014.html">[Gappy-svn] r15 - in trunk: . mockups mockups/admin
+</A></li>
+	<LI>Next message: <A HREF="000016.html">[Gappy-svn] r17 - in trunk/mockups: . student
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

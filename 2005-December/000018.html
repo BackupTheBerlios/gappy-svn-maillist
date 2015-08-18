@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-December/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r19%20-%20in%20trunk/gappy%3A%20.%20apps%20apps/gappy%20apps/gappy/models%20apps/gappy/views&In-Reply-To=%3C200512210100.jBL10qs1032753%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views</H1>
+    <B>drinian at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r19%20-%20in%20trunk/gappy%3A%20.%20apps%20apps/gappy%20apps/gappy/models%20apps/gappy/views&In-Reply-To=%3C200512210100.jBL10qs1032753%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views">drinian at berlios.de
+       </A><BR>
+    <I>Wed Dec 21 02:00:52 CET 2005</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000019.html">[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: drinian
+Date: 2005-12-21 02:00:20 +0100 (Wed, 21 Dec 2005)
+New Revision: 19
+
+Added:
+   trunk/gappy/apps/gappy/
+   trunk/gappy/apps/gappy/__init__.py
+   trunk/gappy/apps/gappy/__init__.pyc
+   trunk/gappy/apps/gappy/models/
+   trunk/gappy/apps/gappy/models/__init__.py
+   trunk/gappy/apps/gappy/models/gappy.py
+   trunk/gappy/apps/gappy/views.py
+   trunk/gappy/apps/gappy/views/
+   trunk/gappy/apps/gappy/views/__init__.py
+Modified:
+   trunk/gappy/settings.py
+Log:
+Started work on the data model. Incomplete, but the project has now been 
+initialized.
+
+
+Added: trunk/gappy/apps/gappy/__init__.py
+===================================================================
+
+Added: trunk/gappy/apps/gappy/__init__.pyc
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/gappy/apps/gappy/__init__.pyc
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/gappy/apps/gappy/models/__init__.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/__init__.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/models/__init__.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1 @@
++__all__ = ['gappy']
+
+Added: trunk/gappy/apps/gappy/models/gappy.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/gappy.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/models/gappy.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1,19 @@
++from django.core import meta
++
++# Create your models here.
++class User(meta.Model):
++    username = meta.CharField(maxlength=20)
++    passwd = meta.CharField(maxlength=20)
++    real_name = meta.TextField(maxlength=50)
++    superuser = meta.BooleanField()
++
++class Course(meta.Model):
++    cid = meta.IntegerField()
++    cname = meta.TextField(maxlength=100)
++
++class Project(meta.Model):
++    pid = meta.IntegerField()
++    pname = meta.TextField(maxlength=100)
++
++class DemoTime(meta.Model):
++    time = meta.DateTimeField()
+
+Added: trunk/gappy/apps/gappy/views/__init__.py
+===================================================================
+
+Added: trunk/gappy/apps/gappy/views.py
+===================================================================
+--- trunk/gappy/apps/gappy/views.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/apps/gappy/views.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -0,0 +1 @@
++# Create your views here.
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-11-23 04:54:41 UTC (rev 18)
++++ trunk/gappy/settings.py	2005-12-21 01:00:20 UTC (rev 19)
+@@ -8,7 +8,7 @@
+ 
+ MANAGERS = ADMINS
+ 
+-DATABASE_ENGINE = 'postgresql' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
++DATABASE_ENGINE = 'sqlite3' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+ DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+ DATABASE_USER = ''             # Not used with sqlite3.
+ DATABASE_PASSWORD = ''         # Not used with sqlite3.
+@@ -62,4 +62,5 @@
+ )
+ 
+ INSTALLED_APPS = (
++    'gappy.apps.gappy',
+ )
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000019.html">[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

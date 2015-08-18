@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r9 - trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r9%20-%20trunk&In-Reply-To=%3C200511170008.jAH084kF001168%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r9 - trunk</H1>
+    <B>gecko at BerliOS</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r9%20-%20trunk&In-Reply-To=%3C200511170008.jAH084kF001168%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r9 - trunk">gecko at berlios.de
+       </A><BR>
+    <I>Thu Nov 17 01:08:04 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Gappy-svn] r8 - trunk/code
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[Gappy-svn] r10 - trunk/docs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: gecko
+Date: 2005-11-17 01:07:56 +0100 (Thu, 17 Nov 2005)
+New Revision: 9
+
+Modified:
+   trunk/setup_django.sh
+Log:
+Fixed a slight typo in the setup script
+
+
+Modified: trunk/setup_django.sh
+===================================================================
+--- trunk/setup_django.sh	2005-11-16 23:52:40 UTC (rev 8)
++++ trunk/setup_django.sh	2005-11-17 00:07:56 UTC (rev 9)
+@@ -2,7 +2,7 @@
+ 
+ export PATH=`pwd`/support/django_src/django/bin:$PATH
+ export DJANGO_SETTINGS_MODULE=gappy.settings
+-export PYTHONPATH=`pwd`/..:$PYTHONPATH
++export PYTHONPATH=`pwd`:$PYTHONPATH
+ if [ $HOST != 'zippy.dorm.duke.edu' ]; then
+ 	export PYTHONPATH=`pwd`/support/django_src/django:$PYTHONPATH
+ fi
+\ No newline at end of file
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Gappy-svn] r8 - trunk/code
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[Gappy-svn] r10 - trunk/docs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

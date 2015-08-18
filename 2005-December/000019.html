@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-December/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r20%20-%20in%20trunk/gappy%3A%20.%20apps/gappy/models&In-Reply-To=%3C200512231738.jBNHcMNp006165%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000018.html">
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models</H1>
+    <B>drinian at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r20%20-%20in%20trunk/gappy%3A%20.%20apps/gappy/models&In-Reply-To=%3C200512231738.jBNHcMNp006165%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models">drinian at berlios.de
+       </A><BR>
+    <I>Fri Dec 23 18:38:22 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000018.html">[Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views
+</A></li>
+        <LI>Next message: <A HREF="000020.html">[Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: drinian
+Date: 2005-12-23 18:38:13 +0100 (Fri, 23 Dec 2005)
+New Revision: 20
+
+Modified:
+   trunk/gappy/apps/gappy/models/gappy.py
+   trunk/gappy/settings.py
+Log:
+Ok, the data model seems to be fully functional.
+
+Note that in order to use it you will have to initialize and populate 
+your own database file. The way to do that is:
+
+django-admin.py init
+django-admin.py install gappy
+
+Note that this will create a file named gappy.db in your current 
+directory, so choose wisely. The other nice part of this is that you can 
+reset your test data by deleting gappy.db and repeating the two above 
+steps.
+
+
+
+Modified: trunk/gappy/apps/gappy/models/gappy.py
+===================================================================
+--- trunk/gappy/apps/gappy/models/gappy.py	2005-12-21 01:00:20 UTC (rev 19)
++++ trunk/gappy/apps/gappy/models/gappy.py	2005-12-23 17:38:13 UTC (rev 20)
+@@ -1,19 +1,29 @@
+ from django.core import meta
++from django.models.auth import User
+ 
+-# Create your models here.
+-class User(meta.Model):
+-    username = meta.CharField(maxlength=20)
+-    passwd = meta.CharField(maxlength=20)
+-    real_name = meta.TextField(maxlength=50)
+-    superuser = meta.BooleanField()
+-
++# Understand that a user can represent one of two things:
++# 1) A group of students.
++# 2) A single person acting as an administrator.
++#
++# This is why users only belong to one class.
+ class Course(meta.Model):
+-    cid = meta.IntegerField()
+     cname = meta.TextField(maxlength=100)
+ 
++class GappyUser(meta.Model):
++    class META:
++        permissions = (
++            (&quot;can_set_appointment&quot;, &quot;Can create or delete appointment times&quot;),
++            (&quot;can_choose_appointment&quot;, &quot;Can choose an appointment time&quot;),
++            )
++    user = meta.OneToOneField(User)
++    course = meta.ForeignKey(Course)
++
+ class Project(meta.Model):
+-    pid = meta.IntegerField()
+     pname = meta.TextField(maxlength=100)
++    course = meta.ForeignKey(Course)
+ 
+ class DemoTime(meta.Model):
+     time = meta.DateTimeField()
++    demoer = meta.ForeignKey(GappyUser)
++    demoee = meta.ForeignKey(GappyUser)
++    course = meta.ForeignKey(Course)
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-12-21 01:00:20 UTC (rev 19)
++++ trunk/gappy/settings.py	2005-12-23 17:38:13 UTC (rev 20)
+@@ -1,4 +1,5 @@
+ # Django settings for gappy project.
++import os
+ 
+ DEBUG = True
+ 
+@@ -9,7 +10,7 @@
+ MANAGERS = ADMINS
+ 
+ DATABASE_ENGINE = 'sqlite3' # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
++DATABASE_NAME = os.path.join(os.getcwd(), &quot;gappy.db&quot;)  # Or path to database file if using sqlite3.
+ DATABASE_USER = ''             # Not used with sqlite3.
+ DATABASE_PASSWORD = ''         # Not used with sqlite3.
+ DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000018.html">[Gappy-svn] r19 - in trunk/gappy: . apps apps/gappy apps/gappy/models apps/gappy/views
+</A></li>
+	<LI>Next message: <A HREF="000020.html">[Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

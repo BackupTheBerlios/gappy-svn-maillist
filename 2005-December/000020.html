@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-December/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r21%20-%20in%20trunk/gappy%3A%20.%20apps/gappy%20templates%20templates/gappy&In-Reply-To=%3C200512310146.jBV1kXQJ030047%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000019.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy</H1>
+    <B>drinian at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r21%20-%20in%20trunk/gappy%3A%20.%20apps/gappy%20templates%20templates/gappy&In-Reply-To=%3C200512310146.jBV1kXQJ030047%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r21 - in trunk/gappy: . apps/gappy templates templates/gappy">drinian at berlios.de
+       </A><BR>
+    <I>Sat Dec 31 02:46:33 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000019.html">[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: drinian
+Date: 2005-12-31 02:46:07 +0100 (Sat, 31 Dec 2005)
+New Revision: 21
+
+Added:
+   trunk/gappy/templates/
+   trunk/gappy/templates/gappy/
+   trunk/gappy/templates/gappy/index.html
+   trunk/gappy/templates/gappy/login.html
+Modified:
+   trunk/gappy/apps/gappy/views.py
+   trunk/gappy/settings.py
+   trunk/gappy/urls.py
+Log:
+Login code is working, mostly. It's an example of how to do it, anyway, 
+which is fairly undocumented.
+
+Django permissions do not work yet. Maybe later.
+
+If anyone else wants to take up this project for a while, go for it. I'm 
+off to greener pastures. Happy New Year!
+
+
+Modified: trunk/gappy/apps/gappy/views.py
+===================================================================
+--- trunk/gappy/apps/gappy/views.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/apps/gappy/views.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -1 +1,39 @@
+-# Create your views here.
++from django.core.template import Context, loader
++from django.models.gappy import gappyusers
++from django.models.auth import users
++from django.utils.httpwrappers import HttpResponse, HttpResponseRedirect
++from django.core.extensions import render_to_response
++from django.views.decorators.auth import login_required
++
+<A HREF="https://lists.berlios.de/mailman/listinfo/gappy-svn">+ at login_required</A>
++def index(request):
++    t = loader.get_template(&quot;gappy/index&quot;)
++    c = Context({})
++    return HttpResponse(t.render(c))
++
++def login(request):
++    try:
++        user = users.get_object(username__exact=request.POST[&quot;username&quot;])
++        if not user.check_password(request.POST[&quot;password&quot;]):
++            raise users.UserDoesNotExist
++        # set the session's user active
++        request.session[users.SESSION_KEY] = user.id
++        try:
++            nextpage = request.GET[&quot;next&quot;]
++        except KeyError:
++            nextpage = &quot;/gappy/&quot;
++        return HttpResponseRedirect(nextpage)
++    except KeyError:
++        return render_to_response(&quot;gappy/login&quot;)
++    except users.UserDoesNotExist:
++        t = loader.get_template(&quot;gappy/login&quot;)
++        c = Context({&quot;error&quot;:&quot;Some login information was wrong.&quot;})
++        return HttpResponse(t.render(c))
++
++def logout(request):
++    try:
++        del request.session[users.SESSION_KEY]
++    except KeyError:
++        return HttpResponse(&quot;Already logged out.&quot;)
++    else:
++        return HttpResponse(&quot;You have been logged out.&quot;)
+
+Modified: trunk/gappy/settings.py
+===================================================================
+--- trunk/gappy/settings.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/settings.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -60,6 +60,7 @@
+ 
+ TEMPLATE_DIRS = (
+     # Put strings here, like &quot;/home/html/django_templates&quot;.
++    os.path.join(os.getcwd(), &quot;templates&quot;)
+ )
+ 
+ INSTALLED_APPS = (
+
+Added: trunk/gappy/templates/gappy/index.html
+===================================================================
+--- trunk/gappy/templates/gappy/index.html	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/templates/gappy/index.html	2005-12-31 01:46:07 UTC (rev 21)
+@@ -0,0 +1,24 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;Welcome to GAPPy&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++{% if perms.gappy %}
++{% if perms.gappy.can_set_appointment %}
++&lt;p&gt;You are already logged in and should go to &lt;a href=&quot;instructor/&quot;&gt;your homepage&lt;/a&gt;.&lt;/p&gt;
++{% else %}
++{% if perms.gappy.can_choose_appointment %}
++&lt;p&gt;You are already logged in and should go to &lt;a href=&quot;group/&quot;&gt;your homepage&lt;/a&gt;.&lt;/p&gt;
++{% else %}
++&lt;p&gt;You are logged in but don't seem to have any rights.&lt;/p&gt;
++{% endif %}
++{% endif %}
++{% else %}
++&lt;p&gt;You are not logged in.&lt;/p&gt;
++{% endif %}
++&lt;/body&gt;
++&lt;/html&gt;
+
+Added: trunk/gappy/templates/gappy/login.html
+===================================================================
+--- trunk/gappy/templates/gappy/login.html	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/templates/gappy/login.html	2005-12-31 01:46:07 UTC (rev 21)
+@@ -0,0 +1,31 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;Welcome to GAPPy&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++	&lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogo.png&quot;/&gt;
++{%if error %}
++&lt;p&gt;{{ error }}&lt;/p&gt;
++{% endif %}
++	&lt;table id=&quot;login&quot;&gt;
++		&lt;form method=&quot;post&quot;&gt;
++			&lt;!-- &lt;h1&gt;Login&lt;/h1&gt; --&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++				&lt;td class=&quot;label&quot;&gt;username:&lt;/td&gt;
++				&lt;td class=&quot;input&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/td&gt;
++			&lt;/tr&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++				&lt;td class=&quot;label&quot;&gt;password:&lt;/td&gt;
++				&lt;td class=&quot;input&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt;&lt;/td&gt;
++			&lt;/tr&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++			     &lt;td colspan=&quot;2&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Login&quot;/&gt;&lt;/td&gt;
++            &lt;/tr&gt;	
++		&lt;/form&gt;
++	&lt;/table&gt;
++&lt;/body&gt;
++&lt;/html&gt;
+\ No newline at end of file
+
+Modified: trunk/gappy/urls.py
+===================================================================
+--- trunk/gappy/urls.py	2005-12-23 17:38:13 UTC (rev 20)
++++ trunk/gappy/urls.py	2005-12-31 01:46:07 UTC (rev 21)
+@@ -6,4 +6,9 @@
+ 
+     # Uncomment this for admin:
+ #     (r'^admin/', include('django.contrib.admin.urls.admin')),
++    (r'^accounts/login/', 'gappy.apps.gappy.views.login'),
++    (r'^accounts/logout/', 'gappy.apps.gappy.views.logout'),
++    (r'^gappy/$', 'gappy.apps.gappy.views.index'),
++    (r'^gappy/group/$', 'gappy.apps.gappy.views.group'),
++    (r'^gappy/instructor/$', 'gappy.apps.gappy.views.instructor')
+ )
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000019.html">[Gappy-svn] r20 - in trunk/gappy: . apps/gappy/models
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

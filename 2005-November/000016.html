@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r17 - in trunk/mockups: . student
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r17%20-%20in%20trunk/mockups%3A%20.%20student&In-Reply-To=%3C200511220321.jAM3L8Nb010223%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r17 - in trunk/mockups: . student</H1>
+    <B>rch18 at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r17%20-%20in%20trunk/mockups%3A%20.%20student&In-Reply-To=%3C200511220321.jAM3L8Nb010223%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r17 - in trunk/mockups: . student">rch18 at berlios.de
+       </A><BR>
+    <I>Tue Nov 22 04:21:08 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Gappy-svn] r16 - in trunk/docs: . html
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[Gappy-svn] r18 - trunk/mockups/admin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: rch18
+Date: 2005-11-22 04:20:44 +0100 (Tue, 22 Nov 2005)
+New Revision: 17
+
+Added:
+   trunk/mockups/student/
+   trunk/mockups/student/GAPPyLogo.png
+   trunk/mockups/student/GAPPyLogoSmall.png
+   trunk/mockups/student/confirmtime.html
+   trunk/mockups/student/login.html
+   trunk/mockups/student/mygappy_admin_style.css
+   trunk/mockups/student/projlist.html
+   trunk/mockups/student/selecttime.html
+   trunk/mockups/student/style.css
+   trunk/mockups/student/trash.png
+Log:
+This is the goods for the student mockup...Note that the confirmation and cancellation page is the same thing
+
+Added: trunk/mockups/student/GAPPyLogo.png
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/mockups/student/GAPPyLogo.png
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/mockups/student/GAPPyLogoSmall.png
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/mockups/student/GAPPyLogoSmall.png
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/mockups/student/confirmtime.html
+===================================================================
+--- trunk/mockups/student/confirmtime.html	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/confirmtime.html	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,27 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;My GAPPy: Demo Time&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;mygappy_admin_style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++    &lt;div id=&quot;header&quot;&gt;
++	   &lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogoSmall.png&quot;/&gt;
++    &lt;/div&gt;
++    &lt;h1&gt;My GAPPy: Demo Times Available&lt;/h1&gt;
++
++    &lt;h2&gt;Class: &quot;myCourse&quot;&lt;/h2&gt;
++ 	&lt;h2&gt; Project: &quot;myProject&quot; &lt;/h2&gt;
++    &lt;div class=&quot;main_content&quot;&gt;
++        &lt;div id=&quot;cancDemo&quot;&gt;
++                &lt;form&gt;
++			You have signed up for a demo for myProject in myCourse for TIME with Hugh Jass
++		    &lt;input type=&quot;submit&quot; value=&quot;Cancel Demo Time&quot; /&gt;
++                &lt;input type=&quot;submit&quot; value=&quot;LogOut&quot; /&gt;
++           &lt;/form&gt;
++        &lt;/div&gt;
++    &lt;/div&gt;
++
++&lt;/body&gt;
+
+Added: trunk/mockups/student/login.html
+===================================================================
+--- trunk/mockups/student/login.html	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/login.html	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,29 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;Welcome to GAPPy&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++	&lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogo.png&quot;/&gt;
++	&lt;table id=&quot;login&quot;&gt;
++		&lt;form&gt;
++			&lt;!-- &lt;h1&gt;Login&lt;/h1&gt; --&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++				&lt;td class=&quot;label&quot;&gt;username:&lt;/td&gt;
++				&lt;td class=&quot;input&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/td&gt;
++			&lt;/tr&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++				&lt;td class=&quot;label&quot;&gt;password:&lt;/td&gt;
++				&lt;td class=&quot;input&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot;/&gt;&lt;/td&gt;
++			&lt;/tr&gt;
++			&lt;tr class=&quot;input_row&quot;&gt;
++			     &lt;td colspan=&quot;2&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Login&quot;/&gt;&lt;/td&gt;
++            &lt;/tr&gt;	
++		&lt;/form&gt;
++	&lt;/table&gt;
++	&lt;div id=&quot;timestamp&quot;&gt;Current Server Time: Wed Nov. 9, 2005, 11:23:04 PM&lt;/div&gt;
++&lt;/body&gt;
++&lt;/html&gt;
+
+Added: trunk/mockups/student/mygappy_admin_style.css
+===================================================================
+--- trunk/mockups/student/mygappy_admin_style.css	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/mygappy_admin_style.css	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,60 @@
++#header
++{  
++	text-align:left;
++}
++
++h1, h2
++{
++    text-align:center;
++    color:rgb(53,148,35);
++}
++
++h1
++{
++    margin-bottom:0px;
++    padding-bottom:0px;
++}
++
++h2
++{
++    margin-top:0px;
++    padding-top:0px;
++
++}
++
++.main_content
++{
++    background:rgb(128,247,105);
++    border: thin solid rgb(53,148,35);
++    margin-left:15%;
++    margin-right:15%;
++}
++
++#classes
++{
++    background:rgb(231,230,205);
++}
++
++#demos
++{
++    background:rgb(222,193,205);
++}
++
++
++#appointments h3, #classes h3, #demos h3
++{
++    text-align:center;
++}
++
++.input_box
++{
++	background: white url(input_box_bg.gif) top left repeat-x;
++	border-width:1px;
++	border-style: solid;
++	border-bottom-color: #8bbc82;
++	border-left-color: rgb(53,148,35);
++	border-right-color: #8bbc82;
++	border-top-color: rgb(53,148,35);
++	color:#005500;
++	padding-left:5px;
++}
+\ No newline at end of file
+
+Added: trunk/mockups/student/projlist.html
+===================================================================
+--- trunk/mockups/student/projlist.html	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/projlist.html	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,29 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;My GAPPy: Projects Available&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;mygappy_admin_style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++    &lt;div id=&quot;header&quot;&gt;
++	   &lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogoSmall.png&quot;/&gt;
++    &lt;/div&gt;
++    &lt;h1&gt;My GAPPy: Projects Available&lt;/h1&gt;
++    &lt;h2&gt;Class: &quot;myCourse&quot;&lt;/h2&gt;
++    &lt;div class=&quot;main_content&quot;&gt;
++        &lt;div id=&quot;listProj&quot;&gt;
++            &lt;form&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;proj_name&quot; value=&quot;Project A&quot; /&gt; Project A &lt;br&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;proj_name&quot; value=&quot;Project B&quot; /&gt; Project B &lt;br&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;proj_name&quot; value=&quot;Project C&quot; /&gt; Project C &lt;br&gt;
++                 &lt;input type=&quot;submit&quot; value=&quot;Select&quot; /&gt;
++            &lt;/form&gt;
++            &lt;form&gt;
++                &lt;input type=&quot;submit&quot; value=&quot;LogOut&quot; /&gt;
++           &lt;/form&gt;
++        &lt;/div&gt;
++    &lt;/div&gt;
++&lt;/body&gt;
++
+
+Added: trunk/mockups/student/selecttime.html
+===================================================================
+--- trunk/mockups/student/selecttime.html	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/selecttime.html	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,31 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;My GAPPy: Demos Available&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;mygappy_admin_style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++    &lt;div id=&quot;header&quot;&gt;
++	   &lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogoSmall.png&quot;/&gt;
++    &lt;/div&gt;
++    &lt;h1&gt;My GAPPy: Demo Times Available&lt;/h1&gt;
++
++    &lt;h2&gt;Class: &quot;myCourse&quot;&lt;/h2&gt;
++ 	&lt;h2&gt; Project: &quot;myProject&quot; &lt;/h2&gt;
++    &lt;div class=&quot;main_content&quot;&gt;
++        &lt;div id=&quot;listDemo&quot;&gt;
++            &lt;form&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;demo_time&quot; value=&quot;Time Z&quot; /&gt; Time Z with Hugh Jass&lt;br&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;demo_time&quot; value=&quot;Time Y&quot; /&gt; Time Y with Mike Roch&lt;br&gt;
++                &lt;input type=&quot;radio&quot; name=&quot;demo_time&quot; value=&quot;Time X&quot; /&gt; Time X with Seymore Butts&lt;br&gt;
++                 &lt;input type=&quot;submit&quot; value=&quot;Select&quot; /&gt;
++            &lt;/form&gt;
++            &lt;form&gt;
++                &lt;input type=&quot;submit&quot; value=&quot;LogOut&quot; /&gt;
++           &lt;/form&gt;
++        &lt;/div&gt;
++    &lt;/div&gt;
++
++&lt;/body&gt;
+
+Added: trunk/mockups/student/style.css
+===================================================================
+--- trunk/mockups/student/style.css	2005-11-18 02:33:28 UTC (rev 16)
++++ trunk/mockups/student/style.css	2005-11-22 03:20:44 UTC (rev 17)
+@@ -0,0 +1,67 @@
++body
++{
++	text-align:center;
++}
++
++#gappy_logo
++{
++	padding-bottom:10px;
++	padding-top:10px;
++}
++
++h1
++{
++	background:rgb(222,193,205);
++	color:#000000;
++	font-size:medium;
++}
++
++#login
++{
++	background:rgb(222,193,205);
++	border: thin solid rgb(53,148,35);
++	margin-bottom:50px;
++	margin-left:auto;
++	margin-right:auto;
++	padding-bottom:10px;
++	padding-top:10px;
++	width:425px;;
++}
++
++.input_row
++{
++    text-align:center;
++	padding-bottom:5px;
++}
++
++.input_row .label
++{
++	color:#005500;
++	font-weight:bold;
++	padding-left:10px;
++	padding-right:10px;
++	text-align:right;
++}
++
++.input_row .input
++{
++	text-align:left;
++}
++
++.input_row .input input 
++{
++	background: url(input_box_bg.gif) top left repeat-x;
++	border-width:1px;
++	border-style: solid;
++	border-bottom-color: #8bbc82;
++	border-left-color: rgb(53,148,35);
++	border-right-color: #8bbc82;
++	border-top-color: rgb(53,148,35);
++	color:#005500;
++	padding-left:5px;
++}
++
++#timestamp
++{
++	font-family: monospace, courier, sans-serif;
++}
+
+Added: trunk/mockups/student/trash.png
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/mockups/student/trash.png
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Gappy-svn] r16 - in trunk/docs: . html
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[Gappy-svn] r18 - trunk/mockups/admin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>

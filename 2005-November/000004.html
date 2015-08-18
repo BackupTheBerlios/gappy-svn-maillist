@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Gappy-svn] r5 - trunk/code
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/gappy-svn/2005-November/index.html" >
+   <LINK REL="made" HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r5%20-%20trunk/code&In-Reply-To=%3C200511132300.jADN0xqV001570%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Gappy-svn] r5 - trunk/code</H1>
+    <B>seths at berlios.de</B> 
+    <A HREF="mailto:gappy-svn%40lists.berlios.de?Subject=Re%3A%20%5BGappy-svn%5D%20r5%20-%20trunk/code&In-Reply-To=%3C200511132300.jADN0xqV001570%40sheep.berlios.de%3E"
+       TITLE="[Gappy-svn] r5 - trunk/code">seths at berlios.de
+       </A><BR>
+    <I>Mon Nov 14 00:00:59 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Gappy-svn] r4 - trunk
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Gappy-svn] r6 - in trunk/support/django_src: . django/bin django/conf django/conf/app_template django/conf/locale django/conf/locale/bn django/conf/locale/bn/LC_MESSAGES django/conf/locale/cs django/conf/locale/cs/LC_MESSAGES django/conf/locale/cy django/conf/locale/cy/LC_MESSAGES django/conf/locale/da django/conf/locale/da/LC_MESSAGES django/conf/locale/de django/conf/locale/de/LC_MESSAGES django/conf/locale/en django/conf/locale/en/LC_MESSAGES django/conf/locale/es django/conf/locale/es/LC_MESSAGES django/conf/locale/fr django/conf/locale/fr/LC_MESSAGES django/conf/locale/gl django/conf/locale/gl/LC_MESSAGES django/conf/locale/is django/conf/locale/is/LC_MESSAGES django/conf/locale/it django/conf/locale/it/LC_MESSAGES django/conf/locale/no django/conf/locale/no/LC_MESSAGES django/conf/locale/pt_BR django/conf/locale/pt_BR/LC_MESSAGES django/conf/locale/ro django/conf/locale/ro/LC_MESSAGES django/conf/locale/ru django/conf/locale/ru/LC_MESSAGES django/conf/locale/sk django/co! nf/locale/sk/LC_MESSAGES django/conf/locale/sr django/conf/locale/sr/LC_MESSAGES django/conf/locale/sv django/conf/locale/sv/LC_MESSAGES django/conf/locale/zh_CN django/conf/locale/zh_CN/LC_MESSAGES django/conf/urls django/contrib/admin/media/js django/contrib/admin/models django/contrib/admin/templates/admin django/contrib/admin/templates/registration django/contrib/admin/views django/core django/core/db django/core/db/backends django/core/handlers django/core/meta django/core/template django/middleware django/models django/parts/auth django/templatetags django/utils django/views django/views/generic docs tests/othertests tests/testapp/models
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: seths
+Date: 2005-11-13 23:59:43 +0100 (Sun, 13 Nov 2005)
+New Revision: 5
+
+Added:
+   trunk/code/GAPPyLogo.png
+   trunk/code/login.html
+   trunk/code/style.css
+Log:
+Mockup for login page. Created logo.
+
+
+Added: trunk/code/GAPPyLogo.png
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/code/GAPPyLogo.png
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/code/login.html
+===================================================================
+--- trunk/code/login.html	2005-11-13 22:54:15 UTC (rev 4)
++++ trunk/code/login.html	2005-11-13 22:59:43 UTC (rev 5)
+@@ -0,0 +1,25 @@
++&lt;!DOCTYPE html
++PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
++&quot;<A HREF="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</A>&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++	&lt;title&gt;Welcome to GAPPy&lt;/title&gt;
++	&lt;link rel=&quot;stylesheet&quot; TYPE=&quot;text/css&quot; HREF=&quot;style.css&quot; /&gt;
++&lt;/head&gt;
++&lt;body&gt;
++	&lt;img id=&quot;gappy_logo&quot; src=&quot;GAPPyLogo.png&quot;/&gt;
++	&lt;form id=&quot;login&quot;&gt;
++		&lt;!-- &lt;h1&gt;Login&lt;/h1&gt; --&gt;
++		&lt;div class=&quot;input_row&quot;&gt;
++			&lt;div class=&quot;label&quot;&gt;username:&lt;/div&gt;
++			&lt;div class=&quot;input&quot;&gt;&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;/div&gt;
++		&lt;/div&gt;
++		&lt;div class=&quot;input_row&quot;&gt;
++			&lt;div class=&quot;label&quot;&gt;password:&lt;/div&gt;
++			&lt;div class=&quot;input&quot;&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;/div&gt;
++    &lt;/div&gt;
++		&lt;div class=&quot;input_row&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Login&quot;&gt;&lt;/div&gt;	
++	&lt;/form&gt;
++	&lt;div id=&quot;timestamp&quot;&gt;Current Server Time: Wed Nov. 9, 2005, 11:23:04 PM&lt;/div&gt;
++&lt;/body&gt;
++&lt;/html&gt;
+
+Added: trunk/code/style.css
+===================================================================
+--- trunk/code/style.css	2005-11-13 22:54:15 UTC (rev 4)
++++ trunk/code/style.css	2005-11-13 22:59:43 UTC (rev 5)
+@@ -0,0 +1,63 @@
++body
++{
++	text-align:center;
++}
++
++#gappy_logo
++{
++	padding-top:10px;
++	padding-bottom:10px;
++}
++
++h1
++{
++	font-size:medium;
++	color:#000000;
++	background:rgb(222,193,205);
++}
++
++#login
++{
++	width:400px;
++	margin-left:auto;
++	margin-right:auto;
++	padding-bottom:10px;
++	padding-top:10px;
++	background:rgb(222,193,205);
++	border: thin solid rgb(53,148,35);
++}
++
++.input_row
++{
++	padding-bottom:5px;
++}
++
++.input_row .label
++{
++	display:inline;
++	padding-left:10px;
++	padding-right:10px;
++	color:#005500;
++	font-weight:bold;
++/*
++	background:#CCCCCC;
++	border:thin dotted #000000; 
++*/
++}
++
++.input_row .input
++{
++	display:inline;
++}
++
++.input_row .input input 
++{
++	color:#000000;
++	background: rgb(242,232,236);
++	border: thin dotted rgb(53,148,35); /* old color is rgb(247,207,51) */
++}
++
++#timestamp
++{
++	font-family: courier, sans-serif;
++}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Gappy-svn] r4 - trunk
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Gappy-svn] r6 - in trunk/support/django_src: . django/bin django/conf django/conf/app_template django/conf/locale django/conf/locale/bn django/conf/locale/bn/LC_MESSAGES django/conf/locale/cs django/conf/locale/cs/LC_MESSAGES django/conf/locale/cy django/conf/locale/cy/LC_MESSAGES django/conf/locale/da django/conf/locale/da/LC_MESSAGES django/conf/locale/de django/conf/locale/de/LC_MESSAGES django/conf/locale/en django/conf/locale/en/LC_MESSAGES django/conf/locale/es django/conf/locale/es/LC_MESSAGES django/conf/locale/fr django/conf/locale/fr/LC_MESSAGES django/conf/locale/gl django/conf/locale/gl/LC_MESSAGES django/conf/locale/is django/conf/locale/is/LC_MESSAGES django/conf/locale/it django/conf/locale/it/LC_MESSAGES django/conf/locale/no django/conf/locale/no/LC_MESSAGES django/conf/locale/pt_BR django/conf/locale/pt_BR/LC_MESSAGES django/conf/locale/ro django/conf/locale/ro/LC_MESSAGES django/conf/locale/ru django/conf/locale/ru/LC_MESSAGES django/conf/locale/sk django/co! nf/locale/sk/LC_MESSAGES django/conf/locale/sr django/conf/locale/sr/LC_MESSAGES django/conf/locale/sv django/conf/locale/sv/LC_MESSAGES django/conf/locale/zh_CN django/conf/locale/zh_CN/LC_MESSAGES django/conf/urls django/contrib/admin/media/js django/contrib/admin/models django/contrib/admin/templates/admin django/contrib/admin/templates/registration django/contrib/admin/views django/core django/core/db django/core/db/backends django/core/handlers django/core/meta django/core/template django/middleware django/models django/parts/auth django/templatetags django/utils django/views django/views/generic docs tests/othertests tests/testapp/models
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/gappy-svn">More information about the Gappy-svn
+mailing list</a><br>
+</body></html>
